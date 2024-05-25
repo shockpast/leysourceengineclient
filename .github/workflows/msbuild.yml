@@ -32,3 +32,4 @@ jobs:
         with:
           name: "exe"
           path: "build/release/leysourceengineclient.exe"
+          retention-days: 3
