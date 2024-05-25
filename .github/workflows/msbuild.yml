@@ -1,6 +1,6 @@
-name: MSBuild
+name: Build
 
-on: [push]
+on: [push, pull_request]
 
 env:
   BUILD_CONFIGURATION: Release
@@ -10,23 +10,26 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
-      
-    - name: PreMake5
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Start-Process -FilePath premake5.exe 'vs2019'
-      
-    - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} project
+      - name: Add 'msbuild' to PATH
+        uses: microsoft/setup-msbuild@v2
+      - name: Add 'premake5' to PATH
+        uses: abel0b/setup-premake@v2
+        with:
+          version: "5.0.0-beta2"
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.3
-      with:
-        name: "Exe"
-        path: "build/release/leysourceengineclient.exe"
+      - name: Create Project (premake5)
+        working-directory: ${{ github.workspace }}
+        run: Start-Process -FilePath premake5.exe 'vs2022'
+
+      - name: Build (msbuild)
+        working-directory: ${{ github.workspace }}
+        run: msbuild /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} project
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "exe"
+          path: "build/release/leysourceengineclient.exe"
+          retention-days: 3
