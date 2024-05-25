@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_crosshairangle.h"
 
 bool svc_crosshairangle::Register(leychan* chan)
@@ -18,7 +19,7 @@ bool svc_crosshairangle::ParseMessage(leychan* chan, svc_crosshairangle* thisptr
 	int y = msg.ReadUBitLong(16);
 	int r = msg.ReadUBitLong(16);
 
-	printf("Received svc_CrosshairAngle p: %d y: %d r: %d\n", p, y, r);
+	DebugLog("Received svc_CrosshairAngle p: %d y: %d r: %d\n", p, y, r);
 
 	return true;
 }

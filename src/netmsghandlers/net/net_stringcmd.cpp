@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "net_stringcmd.h"
 
 bool net_stringcmd::Register(leychan* chan)
@@ -17,6 +18,7 @@ bool net_stringcmd::ParseMessage(leychan* chan, net_stringcmd* thisptr, bf_read&
 	char cmd[1024];
 	msg.ReadString(cmd, sizeof(cmd));
 
-	printf("net_StringCmd: %s\n", cmd);
+	Log("net_StringCmd: %s\n", cmd);
+
 	return true;
 }

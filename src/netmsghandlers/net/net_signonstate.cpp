@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "net_signonstate.h"
 
 bool net_signonstate::Register(leychan* chan)
@@ -15,19 +16,19 @@ bool net_signonstate::Register(leychan* chan)
 bool net_signonstate::ParseMessage(leychan* chan, net_signonstate* thisptr, bf_read& msg)
 {
 	int state = msg.ReadByte();
+
 	if (msg.IsOverflowed())
-	{
 		return false;
-	}
+
 	long servercount = msg.ReadLong();
 
 	if (state > 10)
 	{
-		printf("Invalid net_SignonState!\n");
+		ErrorLog("Invalid net_SignonState!\n");
 		return false;
 	}
 
-	printf("Received net_SignOnState: %i, count: %i\n", state, servercount);
+	DebugLog("Received net_SignOnState: %i, count: %i\n", state, servercount);
 	chan->SetSignonState(state, servercount);
 
 	return true;

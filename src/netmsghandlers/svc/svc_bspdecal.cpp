@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_bspdecal.h"
 
 bool svc_bspdecal::Register(leychan* chan)
@@ -21,20 +22,18 @@ bool svc_bspdecal::ParseMessage(leychan* chan, svc_bspdecal* thisptr, bf_read& m
 	int texture = msg.ReadUBitLong(9);
 	int useentity = msg.ReadOneBit();
 
-	int ent = 0;
+	int ent_index = 0;
 	int modulation = 0;
 
 	if (useentity == 1)
 	{
-		ent = msg.ReadUBitLong(MAX_EDICT_BITS);
-
-		modulation = msg.ReadUBitLong(12);//fix me
-
+		ent_index = msg.ReadUBitLong(MAX_EDICT_BITS);
+		modulation = msg.ReadUBitLong(13);
 	}
 
 	int lowpriority = msg.ReadOneBit();
 
-	printf("Received svc_BSPDecal: pos: %f:%f:%f | tex: %i | useent: %i\n", vec.x, vec.y, vec.z, texture, useentity);
+	DebugLog("Received svc_BSPDecal: pos: %f:%f:%f | tex: %i | useent: %i\n", vec.x, vec.y, vec.z, texture, useentity);
 
 	return true;
 }

@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_createstringtable.h"
 
 bool svc_createstringtable::Register(leychan* chan)
@@ -28,7 +29,6 @@ bool svc_createstringtable::ParseMessage(leychan* chan, svc_createstringtable* t
 	if (userdata == 1)
 	{
 		int userdatasize = msg.ReadUBitLong(12);
-
 		int userdatabits = msg.ReadUBitLong(4);
 	}
 
@@ -39,13 +39,10 @@ bool svc_createstringtable::ParseMessage(leychan* chan, svc_createstringtable* t
 
 	char* data = new char[bits];
 
-
 	msg.ReadBits(data, bits);
-
 	delete[] data;
 
-
-	printf("Received svc_CreateStringTable, name: %s | maxentries: %i | size: %d | entries: %i | compressed: %i\n", name, maxentries, size, entries, compressed);
+	DebugLog("Received svc_CreateStringTable, name: %s | maxentries: %i | size: %d | entries: %i | compressed: %i\n", name, maxentries, size, entries, compressed);
 
 	return true;
 }

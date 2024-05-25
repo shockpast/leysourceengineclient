@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "net_setconvar.h"
 
 bool net_setconvar::Register(leychan* chan)
@@ -19,14 +20,13 @@ bool net_setconvar::ParseMessage(leychan* chan, net_setconvar* thisptr, bf_read&
 	char cmdname[255];
 	char cmdval[255];
 
-	printf("net_SetConVar: %i\n", count);
 	for (int i = 0; i < count; i++)
 	{
 		msg.ReadString(cmdname, sizeof(cmdname));
 		msg.ReadString(cmdval, sizeof(cmdval));
-		printf("%s to: %s\n", cmdname, cmdval);
-
+		
+		Log("net_SetConVar: %s -> %s\n", cmdname, cmdval);
 	}
-	printf("net_SetConVar_end, left: %i\n", msg.GetNumBytesLeft());
+
 	return true;
 }

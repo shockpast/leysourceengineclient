@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_classinfo.h"
 
 bool svc_classinfo::Register(leychan* chan)
@@ -22,7 +23,8 @@ bool svc_classinfo::ParseMessage(leychan* chan, svc_classinfo* thisptr, bf_read&
 
 	if (useclientclasses == 0)
 	{
-		printf("Received svc_ClassInfo | classes: %i: \n", classes);
+		DebugLog("Received svc_ClassInfo | classes: %i: \n", classes);
+
 		for (int i = 0; i < classes; i++)
 		{
 			int classid = msg.ReadUBitLong(size);
@@ -36,14 +38,14 @@ bool svc_classinfo::ParseMessage(leychan* chan, svc_classinfo* thisptr, bf_read&
 			if (msg.IsOverflowed())
 				return false;
 
-			printf("Classname: %s | DTname: %s | ClassID: %i\n", classname, dtname, classid);
+			DebugLog("Classname: %s | DTname: %s | ClassID: %i\n", classname, dtname, classid);
 		}
-		printf("svc_ClassInfo end\n");
+
+		DebugLog("svc_ClassInfo end\n");
 	}
 	else {
-		printf("Received svc_ClassInfo, classes: %i\n", classes);
+		DebugLog("Received svc_ClassInfo, classes: %i\n", classes);
 	}
-
 
 	return true;
 }

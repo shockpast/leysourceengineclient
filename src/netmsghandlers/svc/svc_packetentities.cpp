@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_packetentities.h"
 
 bool svc_packetentities::Register(leychan* chan)
@@ -15,17 +16,13 @@ bool svc_packetentities::Register(leychan* chan)
 
 bool svc_packetentities::ParseMessage(leychan* chan, svc_packetentities* thisptr, bf_read& msg)
 {
-	// TODO: This message structure is most likely wrong, fix it
 	int max = msg.ReadUBitLong(MAX_EDICT_BITS);
-
+	
 	int isdelta = msg.ReadOneBit();
-
 	int delta = -1;
 
 	if (isdelta)
-	{
 		delta = msg.ReadLong();
-	}
 
 	int baseline = msg.ReadUBitLong(1);
 	int changed = msg.ReadUBitLong(MAX_EDICT_BITS);
@@ -43,8 +40,7 @@ bool svc_packetentities::ParseMessage(leychan* chan, svc_packetentities* thisptr
 
 	delete[] data;
 
-	printf("Received svc_PacketEntities | isdelta: %i | line: %i | changed: %i | bits: %i | update: %i\n", isdelta, baseline, changed, bits, updatebaseline);
-
+	DebugLog("Received svc_PacketEntities | isdelta: %i | line: %i | changed: %i | bits: %i | update: %i\n", isdelta, baseline, changed, bits, updatebaseline);
 
 	return true;
 }

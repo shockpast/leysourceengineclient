@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_serverinfo.h"
 
 bool svc_serverinfo::Register(leychan* chan)
@@ -14,7 +15,6 @@ bool svc_serverinfo::Register(leychan* chan)
 
 bool svc_serverinfo::ParseMessage(leychan* chan, svc_serverinfo* thisptr, bf_read& msg)
 {
-
 	unsigned short protoversion = msg.ReadShort();
 	long servercount = msg.ReadLong();
 
@@ -50,7 +50,7 @@ bool svc_serverinfo::ParseMessage(leychan* chan, svc_serverinfo* thisptr, bf_rea
 	if (msg.IsOverflowed())
 		return false;
 
-	printf("ServerInfo, players: %lu/%lu | map: %s | name: %s | gm: %s | count: %i | left: %i\n", players, maxplayers, levelname, hostname, gamemode, servercount, msg.GetNumBitsLeft());
+	DebugLog("ServerInfo, players: %lu/%lu | map: %s | name: %s | gm: %s | count: %i | left: %i\n", players, maxplayers, levelname, hostname, gamemode, servercount, msg.GetNumBitsLeft());
 
 	chan->ProcessServerInfo(protoversion, servercount);
 

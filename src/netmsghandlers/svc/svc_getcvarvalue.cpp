@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_getcvarvalue.h"
 
 bool svc_getcvarvalue::Register(leychan* chan)
@@ -17,11 +18,10 @@ bool svc_getcvarvalue::ParseMessage(leychan* chan, svc_getcvarvalue* thisptr, bf
 {
 	int cookie = msg.ReadUBitLong(32);
 
-
 	char cvarname[255];
 	msg.ReadString(cvarname, sizeof(cvarname));
 
-	printf("Received svc_GetCvarValue, cookie: %i | name: %s\n", cookie, cvarname);
+	DebugLog("Received svc_GetCvarValue, cookie: %i | name: %s\n", cookie, cvarname);
 
 	return true;
 }

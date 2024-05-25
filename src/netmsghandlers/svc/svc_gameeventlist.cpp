@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_gameeventlist.h"
 
 bool svc_gameeventlist::Register(leychan* chan)
@@ -24,7 +25,7 @@ bool svc_gameeventlist::ParseMessage(leychan* chan, svc_gameeventlist* thisptr, 
 	char* data = new char[bits];
 	msg.ReadBits(data, bits);
 
-	printf("Received svc_GameEventList, num: %i | bits: %i\n", num, bits);
+	DebugLog("Received svc_GameEventList, num: %i | bits: %i\n", num, bits);
 
 	delete[] data;
 

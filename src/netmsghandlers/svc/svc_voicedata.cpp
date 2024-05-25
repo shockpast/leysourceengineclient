@@ -1,9 +1,10 @@
+#include "../../../deps/osw/ISteamUser017.h"
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_voicedata.h"
 
-#include "../../../deps/osw/ISteamUser017.h"
 
 extern ISteamUser017* temporaryHack;
 
@@ -27,14 +28,11 @@ bool svc_voicedata::ParseMessage(leychan* chan, svc_voicedata* thisptr, bf_read&
 
 	// printf("Received svc_VoiceData, client: %i | proximity: %i | bits: %i\n", client, proximity, bits);
 
-
-
 	char* voicedata = new char[(bits + 8) / 8 + 10];
 	msg.ReadBits(voicedata, bits);
 	svc_voicedata::PlaybackAudio(voicedata, bits);
 
 	delete[] voicedata;
-
 
 	return true;
 }
@@ -62,7 +60,7 @@ void svc_voicedata::PlaybackAudio(char* voiceData, int lengthInBits)
 
 	if (worked != EVoiceResult::k_EVoiceResultOK)
 	{
-		printf("svc_voicedata: PlayBack failed: %d\n", worked);
+		ErrorLog("svc_voicedata: PlayBack failed: %d\n", worked);
 		return;
 	}
 
@@ -83,12 +81,11 @@ void svc_voicedata::PlaybackAudio(char* voiceData, int lengthInBits)
 		swfx = wfx;
 	}
 
-
 	HWAVEOUT hWaveOut = 0;
 
 	if (waveOutOpen(&hWaveOut, 0, swfx, 0, 0, CALLBACK_NULL))
 	{
-		printf("svc_voicedata:: Opening Audio out failed\n");
+		ErrorLog("svc_voicedata:: Opening Audio out failed\n");
 		return;
 	}
 
@@ -106,15 +103,11 @@ void svc_voicedata::PlaybackAudio(char* voiceData, int lengthInBits)
 		int writeret = (int)waveOutWrite(hWaveOut, header, sizeof(WAVEHDR));
 
 		if (writeret != MMSYSERR_NOERROR)
-		{
-			printf("svc_voicedata:: failed writing audio %d\n", writeret);
-		}
-		else {
+			ErrorLog("svc_voicedata:: failed writing audio %d\n", writeret);
+		else 
 			if (WaitForSingleObject(hWaveOut, 3000) != WAIT_OBJECT_0)
-			{
 				return;
-			}
-		}
+
 		waveOutUnprepareHeader(hWaveOut, header, sizeof(WAVEHDR));
 	}
 

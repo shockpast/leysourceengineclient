@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_setview.h"
 
 bool svc_setview::Register(leychan* chan)
@@ -16,6 +17,6 @@ bool svc_setview::ParseMessage(leychan* chan, svc_setview* thisptr, bf_read& msg
 {
 	int ent = msg.ReadUBitLong(MAX_EDICT_BITS);
 
-	printf("Received svc_SetView, ent: %i\n", ent);
+	DebugLog("Received svc_SetView, ent: %i\n", ent);
 	return true;
 }

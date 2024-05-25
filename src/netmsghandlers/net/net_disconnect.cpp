@@ -17,6 +17,7 @@ bool net_disconnect::ParseMessage(leychan* chan, net_disconnect* thisptr, bf_rea
 {
 	char dcreason[1024];
 	msg.ReadString(dcreason, sizeof(dcreason));
+	
 	Log("Disconnected: %s\n", dcreason);
 	Log("Reconnecting in 100 ms...");
 

@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "net_file.h"
 
 bool net_file::Register(leychan* chan)
@@ -20,9 +21,9 @@ bool net_file::ParseMessage(leychan* chan, net_file* thisptr, bf_read& msg)
 	bool requested = (bool)(msg.ReadOneBit() == 1);
 
 	if (requested)
-		printf("net_File: Server requested file: %s::%i\n", filename, transferid);
+		DebugLog("net_File: Server requested file: %s::%i\n", filename, transferid);
 	else
-		printf("net_File: Server is not sending file: %s::%i\n", filename, transferid);
+		WarningLog("net_File: Server is not sending file: %s::%i\n", filename, transferid);
 
 	return true;
 }

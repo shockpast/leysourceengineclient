@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_print.h"
 
 bool svc_print::Register(leychan* chan)
@@ -14,11 +15,10 @@ bool svc_print::Register(leychan* chan)
 
 bool svc_print::ParseMessage(leychan* chan, svc_print* thisptr, bf_read& msg)
 {
-
 	char print[2048];
 	msg.ReadString(print, sizeof(print));
-	printf("svc_Print:\n");
-	printf("%s", print);
+	
+	Log("%s", print);
 
 	return true;
 }

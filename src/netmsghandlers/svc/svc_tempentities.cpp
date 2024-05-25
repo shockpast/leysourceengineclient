@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_tempentities.h"
 
 bool svc_tempentities::Register(leychan* chan)
@@ -27,7 +28,7 @@ bool svc_tempentities::ParseMessage(leychan* chan, svc_tempentities* thisptr, bf
 
 	delete[] data;
 
-	printf("Received svc_TempEntities, num: %i | bits: %i\n", num, bits);
+	DebugLog("Received svc_TempEntities, num: %i | bits: %i\n", num, bits);
 
 	return true;
 }

@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "svc_updatestringtable.h"
+#include "../../helpers.h"
 
 bool svc_updatestringtable::Register(leychan* chan)
 {
@@ -19,9 +20,7 @@ bool svc_updatestringtable::ParseMessage(leychan* chan, svc_updatestringtable* t
 	int changed = 1;
 
 	if (msg.ReadOneBit() != 0)
-	{
 		changed = msg.ReadWord();
-	}
 
 	int bits = msg.ReadUBitLong(20);
 
@@ -29,13 +28,10 @@ bool svc_updatestringtable::ParseMessage(leychan* chan, svc_updatestringtable* t
 		return true;
 
 	char* data = new char[bits];
-
 	msg.ReadBits(data, bits);
-
 	delete[] data;
 
-
-	printf("Received svc_UpdateStringTable, id: %i | changed: %i | bits: %i\n", tableid, changed, bits);
+	DebugLog("Received svc_UpdateStringTable, id: %i | changed: %i | bits: %i\n", tableid, changed, bits);
 
 	return true;
 }

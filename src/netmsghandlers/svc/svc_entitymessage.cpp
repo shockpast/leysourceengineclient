@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_entitymessage.h"
 
 bool svc_entitymessage::Register(leychan* chan)
@@ -28,7 +29,7 @@ bool svc_entitymessage::ParseMessage(leychan* chan, svc_entitymessage* thisptr, 
 
 	delete[] data;
 
-	printf("Received svc_EntityMessage, ent: %i | class: %i | bits: %i\n", ent, entclass, bits);
+	DebugLog("Received svc_EntityMessage, ent: %i | class: %i | bits: %i\n", ent, entclass, bits);
 
 	return true;
 }

@@ -1,6 +1,7 @@
 #include "../../valve/buf.h"
 
 #include "../../leychan.h"
+#include "../../helpers.h"
 #include "svc_voiceinit.h"
 
 bool svc_voiceinit::Register(leychan* chan)
@@ -19,7 +20,7 @@ bool svc_voiceinit::ParseMessage(leychan* chan, svc_voiceinit* thisptr, bf_read&
 
 	int quality = msg.ReadByte();
 
-	printf("Received svc_VoiceInit, codec: %s | quality: %i\n", codec, quality);
+	DebugLog("Received svc_VoiceInit, codec: %s | quality: %i\n", codec, quality);
 
 	return true;
 }

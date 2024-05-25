@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_prefetch.h"
 
 bool svc_prefetch::Register(leychan* chan)
@@ -17,7 +18,7 @@ bool svc_prefetch::ParseMessage(leychan* chan, svc_prefetch* thisptr, bf_read& m
 {
 	int index = msg.ReadUBitLong(4);
 
-	printf("Received svc_Prefetch, index: %i\n", index);
+	DebugLog("Received svc_Prefetch, index: %i\n", index);
 
 	return true;
 }

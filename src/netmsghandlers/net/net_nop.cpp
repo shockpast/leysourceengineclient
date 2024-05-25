@@ -13,6 +13,5 @@ bool net_nop::Register(leychan* chan)
 
 bool net_nop::ParseMessage(leychan* chan, net_nop* thisptr, bf_read& msg)
 {
-
 	return true;
 }

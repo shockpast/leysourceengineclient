@@ -2,6 +2,7 @@
 
 #include "../../leychan.h"
 #include "../../vector.h"
+#include "../../helpers.h"
 #include "svc_gmod_servertoclient.h"
 
 bool svc_gmod_servertoclient::Register(leychan* chan)
@@ -22,68 +23,55 @@ bool svc_gmod_servertoclient::ParseMessage(leychan* chan, svc_gmod_servertoclien
 	if (bits < 1)
 		return true;
 
-
 	if (bits < 0)
 	{
-		printf("Received svc_Gmod_ServerToClient || Invalid!\n");
+		ErrorLog("Received svc_Gmod_ServerToClient || Invalid!\n");
 
 		return true;
 	}
 
 	if (type == 4)
 	{
-
 		char* data = new char[bits];
 
-
 		int id = msg.ReadWord();
-
 		int toread = bits - 8 - 16;
+
 		if (toread > 0)
-		{
 			msg.ReadBits(data, toread);
-		}
 
-
-
-		printf("Received svc_GMod_ServerToClient, type: %i |  bits: %i  | id: %i \n", type, bits, id);
+		DebugLog("Received svc_GMod_ServerToClient, type: %i | bits: %i  | id: %i \n", type, bits, id);
+		DebugLog("svc_GMod_ServerToClient, likely about file: %s", data);
 
 		delete[] data;
 
 		return true;
-
 	}
 
 	if (type == 3)
 	{
-
-		printf("Received svc_GMod_ServerToClient, type: %i |  bits: %i\n", type, bits);
+		DebugLog("Received svc_GMod_ServerToClient, type: %i |  bits: %i\n", type, bits);
 
 		return true;
 	}
-
 
 	if (type == 0)
 	{
-
 		int id = msg.ReadWord();
 
 		char* data = new char[bits];
-
 		int toread = bits - 8 - 16;
+
 		if (toread > 0)
-		{
 			msg.ReadBits(data, toread);
-		}
 
 		delete[] data;
 
-		printf("Received svc_GMod_ServerToClient, type: %i |  bits: %i\n", type, bits);
+		DebugLog("Received svc_GMod_ServerToClient, type: %i | bits: %i\n", type, bits);
 		return true;
 	}
 
-
-	printf("Received svc_GMod_ServerToClient, type: %i |  bits: %i\n", type, bits);
+	DebugLog("Received svc_GMod_ServerToClient, type: %i | bits: %i\n", type, bits);
 
 	return true;
 }
