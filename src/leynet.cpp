@@ -12,11 +12,16 @@
 
 char* leynet::HandleError()
 {
-
 	int wsaerr = WSAGetLastError();
 
 	if (wsaerr == 10035 && !nonblock)
 		return 0;
+
+	if (wsaerr == 10048)
+	{
+		ErrorLog("Local Address is in use, switching -clientport might help.\n");
+		return 0;
+	}
 
 	if (wsaerr == 0)
 		return (char*)"k";
@@ -30,6 +35,7 @@ char* leynet::HandleError()
 	}
 	printf("errmsg: operation failed %i\n", wsaerr);
 #endif
+
 	return (char*)"k";
 }
 
